@@ -50,4 +50,12 @@ instance : AddEquivClass (Λ₁ ≃ₗ Λ₂) Λ₁ Λ₂ where
 lemma preserves_inner (f : Λ₁ ≃ₗ Λ₂) (x y : Λ₁) : ⟪f x, f y⟫_ℤ = ⟪x, y⟫_ℤ :=
   f.preserves_inner' x y
 
+@[ext]
+theorem ext {f g : Λ₁ ≃ₗ Λ₂} (h : ∀ x, f x = g x) : f = g :=
+  DFunLike.ext f g h
+
+@[simp]
+theorem self_trans_symm (f : Λ₁ ≃ₗ Λ₂) : f.trans f.symm = refl Λ₁ :=
+  ext f.left_inv
+
 end IntegralLatticeEquiv

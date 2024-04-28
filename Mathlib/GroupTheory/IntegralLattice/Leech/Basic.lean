@@ -3,7 +3,7 @@ Copyright (c) 2024 Erik van der Plas. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Erik van der Plas
 -/
-import MathLib.GroupTheory.IntegralLattice.Equiv
+import Mathlib.GroupTheory.IntegralLattice.Equiv
 import Mathlib.LinearAlgebra.Dimension.Finrank
 
 universe u

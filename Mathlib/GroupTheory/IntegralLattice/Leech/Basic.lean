@@ -26,4 +26,18 @@ theorem unique (Λ₁ Λ₂ : Type*) [LeechLattice Λ₁] [LeechLattice Λ₂]:
 
 theorem exists_leech : Prop := ∃ (Λ : Type u), Nonempty (LeechLattice Λ)
 
+-- Lemma's about cardinality of vectors of norms 2, 4, 6 and 8:
+
+/-- If Λ is the Leech lattice, then it contains 0 norm 2 vectors. -/
+lemma card_norm_2 : Nat.card {x: Λ | ⟪x, x⟫_ℤ = 2} = 0 := sorry
+
+/-- If Λ is the Leech lattice, then it contains 196560 norm 4 vectors. -/
+lemma card_norm_4 : Nat.card {x: Λ | ⟪x, x⟫_ℤ = 4} = 196560 := sorry
+
+/-- If Λ is the Leech lattice, then it contains 16773120 norm 6 vectors. -/
+lemma card_norm_6 : Nat.card {x: Λ | ⟪x, x⟫_ℤ = 6} = 16773120 := sorry
+
+/-- If Λ is the Leech lattice, then it contains 398034000 norm 8 vectors. -/
+lemma card_norm_8 : Nat.card {x: Λ | ⟪x, x⟫_ℤ = 8} = 398034000 := sorry
+
 end LeechLattice

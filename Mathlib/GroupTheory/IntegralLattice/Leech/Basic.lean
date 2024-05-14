@@ -11,11 +11,14 @@ universe u
 open IntegralLattice
 open FiniteDimensional
 
-/-- The Leech lattice is the unique even, unimodular integral lattice of rank 24. -/
+/-- The Leech lattice is the unique even, unimodular integral lattice of rank 24
+  such that the norm of any non-zero vector is at least 4.
+-/
 class LeechLattice (Λ : Type*) extends IntegralLattice Λ where
   (even : IsEven Λ)
   (unimodular : IsUnimodular Λ)
   (rank_eq_24 : finrank ℤ Λ = 24)
+  (min_norm : ∀ (x : Λ), x ≠ 0 → ⟪x, x⟫_ℤ ≥ 4)
 
 namespace LeechLattice
 
@@ -29,7 +32,11 @@ theorem exists_leech : Prop := ∃ (Λ : Type u), Nonempty (LeechLattice Λ)
 -- Lemma's about cardinality of vectors of norms 2, 4, 6 and 8:
 
 /-- If Λ is the Leech lattice, then it contains 0 norm 2 vectors. -/
-lemma card_norm_2 : Nat.card {x: Λ | ⟪x, x⟫_ℤ = 2} = 0 := sorry
+lemma card_norm_2 : Nat.card {x: Λ | ⟪x, x⟫_ℤ = 2} = 0 := by
+  -- How to use min_norm here?
+  have h : ∀ (x : Λ), x ≠ 0 → ⟪x, x⟫_ℤ ≥ 4 := sorry
+  -- TODO: Ask for help on proving this lemma
+  sorry
 
 /-- If Λ is the Leech lattice, then it contains 196560 norm 4 vectors. -/
 lemma card_norm_4 : Nat.card {x: Λ | ⟪x, x⟫_ℤ = 4} = 196560 := sorry

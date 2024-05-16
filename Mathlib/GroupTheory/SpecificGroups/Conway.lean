@@ -5,21 +5,15 @@ Authors: Erik van der Plas
 -/
 import Mathlib.GroupTheory.IntegralLattice.Leech.Basic
 import Mathlib.GroupTheory.IntegralLattice.Aut
-import Mathlib.LinearAlgebra.FreeModule.Basic
+import Mathlib.GroupTheory.Subgroup.Center
 
-open Module
+open IntegralLatticeAut
 
 variable (Λ : Type*) [LeechLattice Λ]
 
--- TODO: Help needed, helpppppp
 -- The Conway-0 group is the automorphism group of the Leech lattice.
 -- We use the IntegralLatticeAut structure to construct the variable.
-variable (C₀ : Type*) [IntegralLatticeAut Λ]
+abbrev Conway₀ := IntegralLatticeAut Λ
 
-instance : Nontrivial C₀ where
-  exists_pair_ne := by
-    let ι := Free.ChooseBasisIndex ℤ Λ
-    let b : Basis ι ℤ Λ := Free.chooseBasis _ _
-    haveI : Fintype ι := inferInstance
-    let b₀ := Classical.choose b
-    sorry
+-- The Conway-1 group is the Conway-0 group modulo its center.
+def Conway₁ := Conway₀ Λ ⧸ (Subgroup.center (Conway₀ Λ))

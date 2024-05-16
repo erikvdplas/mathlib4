@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Erik van der Plas
 -/
 import Mathlib.GroupTheory.IntegralLattice.Equiv
+import Mathlib.LinearAlgebra.Determinant
 
 variable (Λ : Type*) [IntegralLattice Λ]
 
@@ -22,6 +23,8 @@ instance : Group (IntegralLatticeAut Λ) where
   mul_one := by intros; rfl
   mul_left_inv := IntegralLatticeEquiv.self_trans_symm
 
+variable {Λ}
+
 @[simp]
 lemma one_apply (x : Λ) : (1 : IntegralLatticeAut Λ) x = x :=
   rfl
@@ -29,5 +32,35 @@ lemma one_apply (x : Λ) : (1 : IntegralLatticeAut Λ) x = x :=
 @[simp]
 lemma mul_apply (f g : IntegralLatticeAut Λ) (x : Λ) : (f * g) x = f (g x) :=
   rfl
+
+-- TODO: Code below to different file? (dead code)
+noncomputable
+def det : IntegralLatticeAut Λ →* ℤ where
+  toFun := fun f ↦ LinearMap.det f.toAddEquiv.toAddMonoidHom.toIntLinearMap
+  map_one' := LinearMap.det_id
+  map_mul' := fun f g ↦ by
+    dsimp
+    rw [← map_mul]
+    rfl
+
+lemma _root_.SignType.cast_inj : Function.Injective SignType.cast := by
+  intros a b h
+  revert a b
+  decide
+
+def _root_.Int.SignHom : ℤ →* SignType := {
+  toFun := fun n => SignType.sign n,
+  map_one' := rfl
+  map_mul' := fun n m => by
+    dsimp
+    have : Int.sign (n * m) = Int.sign n * Int.sign m := by
+      simp
+    simp [Int.sign_eq_sign] at this
+    norm_cast at this
+    rwa [SignType.cast_inj.eq_iff] at this
+}
+
+noncomputable
+def SignHom : IntegralLatticeAut Λ →* SignType := Int.SignHom.comp det
 
 end IntegralLatticeAut

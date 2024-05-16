@@ -24,7 +24,27 @@ attribute [instance] IntegralLattice.free IntegralLattice.finite
 
 namespace IntegralLattice
 
-variable (Λ : Type*) [IntegralLattice Λ]
+variable {Λ : Type*} [IntegralLattice Λ]
+
+lemma inner_add (x y z : Λ) : ⟪x, (y + z)⟫_ℤ = ⟪x, y⟫_ℤ + ⟪x, z⟫_ℤ := by
+  rw [inner_sym, add_inner, inner_sym y x, inner_sym z x]
+
+def InnerBilin : Λ →+ Λ →+ ℤ :=
+  AddMonoidHom.mk' (fun x ↦ AddMonoidHom.mk' (fun y ↦ ⟪x, y⟫_ℤ) (inner_add x)) <| by
+    intro x y
+    ext z
+    dsimp
+    apply add_inner
+
+@[simp]
+lemma inner_zero (x : Λ) : ⟪x, 0⟫_ℤ = 0 := by
+  apply (InnerBilin x).map_zero
+
+@[simp]
+lemma zero_inner (y : Λ) : ⟪0, y⟫_ℤ = 0 := by
+  rw [inner_sym, inner_zero]
+
+variable (Λ)
 
 def IsEven : Prop := ∀ x y: Λ, Even ⟪x, y⟫_ℤ
 

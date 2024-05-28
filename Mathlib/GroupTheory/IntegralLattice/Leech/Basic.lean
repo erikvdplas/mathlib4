@@ -29,6 +29,7 @@ theorem unique (Λ₁ Λ₂ : Type*) [LeechLattice Λ₁] [LeechLattice Λ₂]:
 
 theorem exists_leech : Prop := ∃ (Λ : Type u), Nonempty (LeechLattice Λ)
 
+-- TODO: Prove without sorry?
 instance (n : ℕ) : Finite {x: Λ | ⟪x, x⟫_ℤ = n} := sorry
 instance (n : ℕ) : Finite {x: Λ // ⟪x, x⟫_ℤ = n} := sorry
 
@@ -37,6 +38,7 @@ instance (n : ℕ) : Finite {x: Λ // ⟪x, x⟫_ℤ = n} := sorry
 /-- If Λ is the Leech lattice, then it contains 0 norm 2 vectors. -/
 lemma card_norm_2 : Nat.card {x: Λ | ⟪x, x⟫_ℤ = 2} = 0 := by
   rw [Nat.card_eq_zero]
+  MulAut.conj
   left
   simp
   intro x hx

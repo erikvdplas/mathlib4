@@ -16,4 +16,7 @@ variable (Λ : Type*) [LeechLattice Λ]
 abbrev Conway₀ := IntegralLatticeAut Λ
 
 -- The Conway-1 group is the Conway-0 group modulo its center.
-def Conway₁ := Conway₀ Λ ⧸ (Subgroup.center (Conway₀ Λ))
+abbrev Conway₁ := Conway₀ Λ ⧸ (Subgroup.center (Conway₀ Λ))
+
+-- The Conway-1 group is a simple group.
+instance Conway₁.simple : IsSimpleGroup (Conway₁ Λ) := sorry

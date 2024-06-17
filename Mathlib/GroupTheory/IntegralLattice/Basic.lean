@@ -26,9 +26,11 @@ namespace IntegralLattice
 
 variable {Λ : Type*} [IntegralLattice Λ]
 
+/-- Inner product is also additive in the second argument by symmetry. -/
 lemma inner_add (x y z : Λ) : ⟪x, (y + z)⟫_ℤ = ⟪x, y⟫_ℤ + ⟪x, z⟫_ℤ := by
   rw [inner_sym, add_inner, inner_sym y x, inner_sym z x]
 
+/-- Bilinear form of the inner product on an integral lattice as additive monoid homomorphism.  -/
 def InnerBilin : Λ →+ Λ →+ ℤ :=
   AddMonoidHom.mk' (fun x ↦ AddMonoidHom.mk' (fun y ↦ ⟪x, y⟫_ℤ) (inner_add x)) <| by
     intro x y
@@ -36,6 +38,7 @@ def InnerBilin : Λ →+ Λ →+ ℤ :=
     dsimp
     apply add_inner
 
+/-- Inner product with zero vector is always zero. -/
 @[simp]
 lemma inner_zero (x : Λ) : ⟪x, 0⟫_ℤ = 0 := by
   apply (InnerBilin x).map_zero
@@ -46,7 +49,8 @@ lemma zero_inner (y : Λ) : ⟪0, y⟫_ℤ = 0 := by
 
 variable (Λ)
 
-def IsEven : Prop := ∀ x y: Λ, Even ⟪x, y⟫_ℤ
+/-- A lattice is even if all norms are even. -/
+def IsEven : Prop := ∀ x: Λ, Even ⟪x, x⟫_ℤ
 
 def gramMatrix {Λ ι : Type*} [IntegralLattice Λ] (v : ι → Λ) :=
   Matrix.of (fun i j ↦ ⟪v i, v j⟫_ℤ)
@@ -57,6 +61,7 @@ noncomputable
 def determinant : ℤ :=
   (gramMatrix (Free.chooseBasis ℤ Λ)).det
 
+/-- A lattice is unimodular if its determinant is equal to 1. -/
 def IsUnimodular : Prop := determinant Λ = 1
 
 end IntegralLattice

@@ -72,7 +72,7 @@ theorem IsPartition.of_orbits :
     exact Set.Nonempty.ne_empty (MulAction.orbit_nonempty a) ha
   intro a; use orbit G a
   constructor
-  · simp only [Set.mem_range_self, mem_orbit_self, exists_unique_iff_exists, exists_true_left]
+  · simp only [Set.mem_range, exists_apply_eq_apply, mem_orbit_self, and_self]
   · simp only [Set.mem_range, exists_unique_iff_exists, exists_prop, and_imp, forall_exists_index,
       forall_apply_eq_imp_iff']
     rintro B b ⟨rfl⟩ ha
@@ -416,7 +416,7 @@ theorem IsBlock.isBlockSystem [hGX : MulAction.IsPretransitive G X]
     use g • B
     constructor
     · simp only [Set.mem_range, exists_apply_eq_apply, exists_unique_iff_exists, exists_true_left]
-      exact hg
+      simp [hg]
     · simp only [Set.mem_range, exists_unique_iff_exists, exists_prop, and_imp, forall_exists_index,
         forall_apply_eq_imp_iff']
       intro B' g' hg' ha
@@ -608,14 +608,13 @@ theorem Setoid.nat_sum {α : Type _} [Finite α] {c : Set (Set α)} (hc : Setoid
   simp only [Subtype.mk_eq_mk, Subtype.coe_mk]
   apply And.intro _ hab
   refine' ExistsUnique.unique (hc.2 b) _ _
-  simp only [exists_unique_iff_exists, exists_prop]
   exact ⟨hx, ha⟩
-  simp only [exists_unique_iff_exists, exists_prop]
   exact ⟨hy, hb⟩
   -- surjectivity
   intro a
-  obtain ⟨x, ⟨hx, ha : a ∈ x, _⟩, _⟩ := hc.2 a
-  use ⟨⟨x, hx⟩, ⟨a, ha⟩⟩
+  obtain ⟨x, ⟨hx, ha⟩, _⟩ := hc.2 a
+  simp only [Sigma.exists, Subtype.exists, exists_prop, exists_eq_right]
+  use x, hx, ha
 
 theorem Set.ncard_coe {α : Type*} (s : Set α) :
     s.ncard = Set.ncard (Set.univ : Set (Set.Elem s)) := by

@@ -14,6 +14,7 @@ def IntegralLatticeAut := IntegralLatticeEquiv Λ Λ
 
 namespace IntegralLatticeAut
 
+/-- Integral lattice automorphisms form a group under composition. -/
 instance : Group (IntegralLatticeAut Λ) where
   mul f g := IntegralLatticeEquiv.trans g f
   one := IntegralLatticeEquiv.refl Λ
@@ -33,7 +34,7 @@ lemma one_apply (x : Λ) : (1 : IntegralLatticeAut Λ) x = x :=
 lemma mul_apply (f g : IntegralLatticeAut Λ) (x : Λ) : (f * g) x = f (g x) :=
   rfl
 
--- TODO: Code below to different file? (dead code)
+/-- The determinant of an integral lattice automorphism, as a group homomorphism. -/
 noncomputable
 def det : IntegralLatticeAut Λ →* ℤ where
   toFun := fun f ↦ LinearMap.det f.toAddEquiv.toAddMonoidHom.toIntLinearMap

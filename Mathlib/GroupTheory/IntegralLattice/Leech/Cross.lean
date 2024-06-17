@@ -57,8 +57,9 @@ instance : MulAction (IntegralLatticeAut Λ) (Cross Λ) where
     ext x
     simp
 
-lemma card_cross_carrier (C : Cross Λ) : Nat.card C.carrier = 48 := sorry
-
 lemma card_cross : Nat.card (Cross Λ) = 8292375 := sorry
+
+lemma card_cross_carrier (C : Cross Λ) : Nat.card C.carrier = 48 := by
+  sorry
 
 end Cross

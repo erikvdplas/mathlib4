@@ -12,7 +12,7 @@ open IntegralLattice
 open FiniteDimensional
 
 /-- The Leech lattice is the unique even, unimodular integral lattice of rank 24
-  such that the norm of any non-zero vector is at least 4.
+  such that the norm of any nonzero vector is at least 4.
 -/
 class LeechLattice (Λ : Type*) extends IntegralLattice Λ where
   (even : IsEven Λ)
@@ -25,20 +25,16 @@ namespace LeechLattice
 variable (Λ : Type*) [LeechLattice Λ]
 
 theorem unique (Λ₁ Λ₂ : Type*) [LeechLattice Λ₁] [LeechLattice Λ₂]:
-  Nonempty (IntegralLatticeEquiv Λ₁ Λ₂) := sorry
+  Nonempty (Λ₁ ≃ₗ Λ₂) := sorry
 
-theorem exists_leech : Prop := ∃ (Λ : Type u), Nonempty (LeechLattice Λ)
+theorem exists_leech : ∃ (Λ : Type u), Nonempty (LeechLattice Λ) := sorry
 
--- TODO: Prove without sorry?
 instance (n : ℕ) : Finite {x: Λ | ⟪x, x⟫_ℤ = n} := sorry
 instance (n : ℕ) : Finite {x: Λ // ⟪x, x⟫_ℤ = n} := sorry
 
 -- Lemma's about cardinality of vectors of norms 2, 4, 6 and 8:
-
-/-- If Λ is the Leech lattice, then it contains 0 norm 2 vectors. -/
 lemma card_norm_2 : Nat.card {x: Λ | ⟪x, x⟫_ℤ = 2} = 0 := by
   rw [Nat.card_eq_zero]
-  MulAut.conj
   left
   simp
   intro x hx
@@ -48,13 +44,8 @@ lemma card_norm_2 : Nat.card {x: Λ | ⟪x, x⟫_ℤ = 2} = 0 := by
   · have := min_norm x hx0
     linarith
 
-/-- If Λ is the Leech lattice, then it contains 196560 norm 4 vectors. -/
 lemma card_norm_4 : Nat.card {x: Λ | ⟪x, x⟫_ℤ = 4} = 196560 := sorry
-
-/-- If Λ is the Leech lattice, then it contains 16773120 norm 6 vectors. -/
 lemma card_norm_6 : Nat.card {x: Λ | ⟪x, x⟫_ℤ = 6} = 16773120 := sorry
-
-/-- If Λ is the Leech lattice, then it contains 398034000 norm 8 vectors. -/
 lemma card_norm_8 : Nat.card {x: Λ | ⟪x, x⟫_ℤ = 8} = 398034000 := sorry
 
 end LeechLattice
